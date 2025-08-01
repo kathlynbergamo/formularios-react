@@ -1,4 +1,5 @@
 import React from 'react'
+import Input from './input.jsx'
 
 // Reatividade: para criarmos campos de formúlarios reativos, devemos definir o estado para o value e a funçã atualizadora para o onChange.
 
@@ -457,6 +458,17 @@ const App = () => {
 */
 
 // Componentes inputs
+// Podemos definir um componente para cada tipo de campo de formulario, assim evitamos criar codigo repetido.
+const App = () => {
+  const [nome, setNome] = React.useState('');
+  const [email, setEmail] = React.useState('');
 
+  return <form action="">
+    <Input id="nome" label="Nome" value={nome} setValue={setNome}/>
+    <Input id="email" label="Email" value={email} setValue={setEmail} required/>
+    <button>Enviar</button>
+
+  </form>
+}
 
 export default App;
