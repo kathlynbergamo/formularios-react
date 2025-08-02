@@ -1,7 +1,8 @@
 import React from 'react'
-import Input from './input.jsx'
-import Select from './select.jsx'
-import Radio from './radio.jsx'
+import Input from './Form/Input.jsx'
+import Select from './Form/Select.jsx'
+import Radio from './Form/Radio.jsx'
+import Checkbox from './Form/Checkbox.jsx'
 
 // Reatividade: para criarmos campos de formúlarios reativos, devemos definir o estado para o value e a funçã atualizadora para o onChange.
 
@@ -464,21 +465,27 @@ const App = () => {
 const App = () => {
   const [nome, setNome] = React.useState('');
   const [email, setEmail] = React.useState('');
-  const [produto, setProduto] = React.useState('');
+//const [produto, setProduto] = React.useState('');
   const [cor, setCor] = React.useState('Vermelho');
   const [frutas, setFrutas] = React.useState('');
+//const [linguagens, setLinguagens] = React.useState([]); // checkbox é uma array
+  const [termos, setTermos] = React.useState([]); 
 
   return (
     <form action="">
+      <h2>Termos</h2>
+      {/*<Checkbox options={['JavaScript', 'React', 'PHP']} value={linguagens} setValue={setLinguagens} />*/}
+      <Checkbox options={['li e aceito os termos']} value={termos} setValue={setTermos} />
+
       <h2>Cores</h2>
       <Radio options={['Azul', 'Vermelho']} value={cor} setValue={setCor} />
       <h2>Frutas</h2>
       <Radio options={['Banana', 'Maça']} value={frutas} setValue={setFrutas} />
 
-      <Select 
-      options={['notebook', 'smartphone']} 
-      value={produto} 
-      setValue={setProduto} 
+      <Select
+        options={['notebook', 'smartphone']}
+        value={termos}
+        setValue={setTermos}
       />
       <Input id="nome" label="Nome" value={nome} setValue={setNome} />
       <Input id="email" label="Email" value={email} setValue={setEmail} required />
