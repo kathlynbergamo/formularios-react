@@ -462,7 +462,7 @@ const App = () => {
 
 // Componentes inputs
 // Podemos definir um componente para cada tipo de campo de formulario, assim evitamos criar codigo repetido.
-const App = () => {
+/*const App = () => {
   const [nome, setNome] = React.useState('');
   const [email, setEmail] = React.useState('');
 //const [produto, setProduto] = React.useState('');
@@ -473,24 +473,98 @@ const App = () => {
 
   return (
     <form action="">
-      <h2>Termos</h2>
-      {/*<Checkbox options={['JavaScript', 'React', 'PHP']} value={linguagens} setValue={setLinguagens} />*/}
-      <Checkbox options={['li e aceito os termos']} value={termos} setValue={setTermos} />
+      <h2>Termos</h2>*/
+{/*<Checkbox options={['JavaScript', 'React', 'PHP']} value={linguagens} setValue={setLinguagens} />*/ }
+/*<Checkbox options={['li e aceito os termos']} value={termos} setValue={setTermos} />
 
-      <h2>Cores</h2>
-      <Radio options={['Azul', 'Vermelho']} value={cor} setValue={setCor} />
-      <h2>Frutas</h2>
-      <Radio options={['Banana', 'Maça']} value={frutas} setValue={setFrutas} />
+<h2>Cores</h2>
+<Radio options={['Azul', 'Vermelho']} value={cor} setValue={setCor} />
+<h2>Frutas</h2>
+<Radio options={['Banana', 'Maça']} value={frutas} setValue={setFrutas} />
 
-      <Select
-        options={['notebook', 'smartphone']}
-        value={termos}
-        setValue={setTermos}
+<Select
+  options={['notebook', 'smartphone']}
+  value={termos}
+  setValue={setTermos}
+/>
+<Input id="nome" label="Nome" value={nome} setValue={setNome} />
+<Input id="email" label="Email" value={email} setValue={setEmail} required />
+<button>Enviar</button>
+
+</form>
+)
+}*/
+
+// onBlur
+// O onBlur é ativado sempre que o campo fica fora de foco momentos perfeito para validarmos o dados do campo. A validação pode ser feita com JavaScript utilizando REGEX.
+// Componente principal da aplicação
+const App = () => {
+  // Estado para armazenar o valor do CEP digitado
+  const [cep, setCep] = React.useState('');
+
+  // Estado para armazenar mensagens de erro (caso o CEP esteja inválido)
+  const [error, setError] = React.useState(null);
+
+  // Função para validar o CEP digitado
+  function validateCep(value) {
+    // Verifica se o campo está vazio
+    if (value.length === 0) {
+      setError('Preencha o CEP'); // Define uma mensagem de erro
+      return false; // Retorna false para indicar erro
+    }
+    // Verifica se o CEP está no formato correto (ex: 12345-678 ou 12345678)
+    else if (!/^\d{5}-?\d{3}$/.test(value)) {
+      setError('Preencha um CEP válido'); // Define outra mensagem de erro
+      return false;
+    }
+    // Se tudo estiver certo, limpa o erro
+    else {
+      setError(null);
+      return true; // Retorna true para indicar que está válido
+    }
+  }
+
+  // Função chamada quando o campo perde o foco (onBlur)
+  function handleBlur({ target }) {
+    validateCep(target.value); // Valida o valor do campo
+  }
+
+  // Função chamada toda vez que o usuário digita no campo (onChange)
+  function handleChange({ target }) {
+    // Se já existir um erro, revalida o campo enquanto o usuário digita
+    if (error) validateCep(target.value);
+    setCep(target.value); // Atualiza o estado com o novo valor
+  }
+
+  // Função chamada ao enviar o formulário
+  function handleSubmit(event) {
+    event.preventDefault(); // Impede o comportamento padrão do formulário (recarregar a página)
+
+    // Só envia se o CEP for válido
+    if (validateCep(cep)) {
+      console.log('Enviando formulário com CEP:', cep); // Apenas exibe no console
+    } else {
+      console.log('Erro no CEP:', error); // Mostra o erro no console
+    }
+  }
+
+  return (
+    // Formulário com os eventos de envio e campos controlados
+    <form onSubmit={handleSubmit}>
+      {/* Campo de input do CEP (componente personalizado Input) */}
+      <Input 
+        label="CEP" 
+        id="cep" 
+        type="text" 
+        value={cep} 
+        onChange={handleChange} 
+        onBlur={handleBlur}
+        placeholder="00000-000" 
       />
-      <Input id="nome" label="Nome" value={nome} setValue={setNome} />
-      <Input id="email" label="Email" value={email} setValue={setEmail} required />
+      {/* Exibe a mensagem de erro, se existir */}
+      {error && <p>{error}</p>}
+      {/* Botão para enviar o formulário */}
       <button>Enviar</button>
-
     </form>
   )
 }
